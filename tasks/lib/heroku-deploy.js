@@ -56,13 +56,13 @@ function doDeploy(options, tagOpts, next) {
    });
  } else {
    pipeAll(spawn('git', ['checkout', deployRef])).on('exit', function() {
-     pipeAll(spawn('git', ['merge', originRef])).on('exit', function(){
+     //pipeAll(spawn('git', ['merge', originRef])).on('exit', function(){
        push(function(){
          pipeAll(spawn('git', ['checkout', originRef])).on('exit', function() {
            next();
          });
        })
-     });
+     //});
    });
   }
 }
@@ -93,12 +93,12 @@ function getCurrentBranch(next) {
 function getCurrentCommitHash(next) {
  allOutput(spawn('git', ['log', '-1', '--format=format:"%H"']), function(err, out) {
    next(err, out && out.replace(/\n|\r/g, ''));
- });  
+ });
 }
 
 exports.init = function(grunt){
   var exports = {};
-  
+
   exports['deploy'] = function(options, next){
     var options = options || {}
     var deployArgs
@@ -140,6 +140,6 @@ exports.init = function(grunt){
       }
     });
   }
-  
+
   return exports;
 }
