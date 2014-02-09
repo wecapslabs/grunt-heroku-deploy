@@ -47,24 +47,25 @@ function doDeploy(options, tagOpts, next) {
      pushArgs.push(options.deployTag+'^{}:master');
    } else if(options.herokuRemote){
      pushArgs.push(options.herokuRemote);
+     pushArgs.push(options.deployBranch+':master');
    }
    pipeAll(spawn('git', pushArgs)).on('exit', done);
  }
- if(options.deployTag){
+ //if(options.deployTag){
    push(function(){
      next();
    });
- } else {
-   pipeAll(spawn('git', ['checkout', deployRef])).on('exit', function() {
+ //} else {
+   //pipeAll(spawn('git', ['checkout', deployRef])).on('exit', function() {
      //pipeAll(spawn('git', ['merge', originRef])).on('exit', function(){
-       push(function(){
-         pipeAll(spawn('git', ['checkout', originRef])).on('exit', function() {
-           next();
-         });
-       })
+       //push(function(){
+         //pipeAll(spawn('git', ['checkout', originRef])).on('exit', function() {
+           //next();
+         //});
+       //})
      //});
-   });
-  }
+   //});
+  //}
 }
 
 function getCurrentBranch(next) {
